@@ -231,7 +231,7 @@ export default function LandingPage() {
                   </div>
                 ) : (
                   <div className="flex items-center gap-3">
-                    <Button type="submit" loading={loading} disabled={!isValid || !hasSupabase}>
+                    <Button type="submit" loading={loading} disabled={!isValid}>
                       Submit
                     </Button>
                     {!hasSupabase && (
