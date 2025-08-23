@@ -49,6 +49,7 @@ export type FormValues = yup.InferType<typeof schema>;
 export default function LandingPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const hasSupabase = Boolean(supabase);
 
   const {
     register,
@@ -91,7 +92,8 @@ export default function LandingPage() {
       setSubmitted(true);
     } catch (e: any) {
       console.error(e);
-      toast.error('Unexpected error. Please try again later.');
+      const message = e?.message || 'Unexpected error. Please try again later.';
+      toast.error(message);
     } finally {
       setLoading(false);
     }
@@ -107,7 +109,7 @@ export default function LandingPage() {
             <CheckCircle2 className="h-6 w-6 text-emerald-500 flex-shrink-0 mt-1" />
             <div>
               <h2 className="text-2xl font-bold text-gray-900">Submission received</h2>
-              <p className="mt-2 text-gray-700">Thank you for your interest in Talk2MyLawyer. We’ll contact you within 24–48 hours.</p>
+              <p className="mt-2 text-gray-700">Thank you for your interest in Talk2MyLawyer. We’ll send communication on updates and app launch.</p>
             </div>
           </Card>
         </div>
@@ -120,14 +122,14 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="border-b border-gray-200 bg-white">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <header className="border-b border-sky-100/70 bg-white/80 backdrop-blur">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
           <h1 className="text-xl font-bold text-gray-900">Talk2MyLawyer</h1>
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-4 py-8">
+      <main className="max-w-5xl mx-auto px-4 py-10">
         <motion.section {...sectionAnim}>
           <div className="max-w-3xl">
             <h2 className="text-3xl font-bold text-gray-900">Tell us about your interest</h2>
@@ -136,7 +138,7 @@ export default function LandingPage() {
         </motion.section>
 
         <motion.section {...sectionAnim} className="mt-6">
-          <Card className="p-6">
+          <Card className="p-6 ring-1 ring-sky-100/60">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               {/* Role and Intent */}
               <div>
@@ -225,15 +227,20 @@ export default function LandingPage() {
               </div>
 
               <div className="flex items-center justify-between gap-3 pt-2">
-                <p className="text-sm text-gray-500">We respect your privacy and do not collect sensitive information.</p>
+                {/* <p className="text-sm text-gray-500">We respect your privacy and do not collect sensitive information.</p> */}
                 {loading ? (
                   <div className="flex items-center gap-3">
                     <Skeleton className="h-10 w-28" />
                   </div>
                 ) : (
-                  <Button type="submit" loading={loading} disabled={!isValid}>
-                    Submit
-                  </Button>
+                  <div className="flex items-center gap-3">
+                    <Button type="submit" loading={loading} disabled={!isValid || !hasSupabase}>
+                      Submit
+                    </Button>
+                    {!hasSupabase && (
+                      <span className="text-sm text-gray-500">Setup required: add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in .env</span>
+                    )}
+                  </div>
                 )}
               </div>
             </form>
