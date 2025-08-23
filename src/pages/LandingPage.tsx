@@ -41,7 +41,7 @@ const schema = yup.object({
   country: yup.string().required('Country/Region is required'),
   city: yup.string().required('City is required'),
   consent: yup.boolean().oneOf([true], 'Consent is required'),
-  marketing_opt_in: yup.boolean().optional(),
+
 });
 
 export type FormValues = yup.InferType<typeof schema>;
@@ -67,7 +67,7 @@ export default function LandingPage() {
       country: '',
       city: '',
       consent: false,
-      marketing_opt_in: false,
+
     },
   });
 
@@ -84,7 +84,7 @@ export default function LandingPage() {
         country: values.country,
         city: values.city,
         consent: values.consent,
-        marketing_opt_in: values.marketing_opt_in,
+
         meta: { userAgent: navigator.userAgent },
       });
       if (error) throw error;
@@ -217,13 +217,10 @@ export default function LandingPage() {
                 <h3 className="text-lg font-semibold text-gray-900">Preferences & Compliance</h3>
                 <label className="flex items-start gap-3">
                   <input type="checkbox" {...register('consent')} className="mt-1 h-4 w-4 text-sky-500 focus:ring-sky-500 rounded" />
-                  <span className="text-sm text-gray-700">I consent to be contacted regarding the launch of this app.</span>
+                  <span className="text-sm text-gray-700">I consent to be contacted regarding updates and the launch of Talk2MyLawyer.</span>
                 </label>
                 {errors.consent && <p className="text-sm text-red-600">{errors.consent.message as string}</p>}
-                <label className="flex items-start gap-3">
-                  <input type="checkbox" {...register('marketing_opt_in')} className="mt-1 h-4 w-4 text-sky-500 focus:ring-sky-500 rounded" />
-                  <span className="text-sm text-gray-700">I’d like to receive occasional product updates.</span>
-                </label>
+
               </div>
 
               <div className="flex items-center justify-between gap-3 pt-2">
