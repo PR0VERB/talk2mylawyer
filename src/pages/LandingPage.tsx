@@ -88,7 +88,7 @@ export default function LandingPage() {
         meta: { userAgent: navigator.userAgent },
       });
       if (error) throw error;
-      toast.success('Thanks! We will be in touch within 24–48 hours.', { icon: '✅' });
+      toast.success('Thanks! We will be in touch.', { icon: '✅' });
       setSubmitted(true);
     } catch (e: any) {
       console.error(e);
