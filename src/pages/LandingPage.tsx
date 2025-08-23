@@ -71,6 +71,7 @@ export default function LandingPage() {
     },
   });
 
+
   const onSubmit = async (values: FormValues) => {
     try {
       setLoading(true);
@@ -130,6 +131,8 @@ export default function LandingPage() {
       </header>
 
       <main className="max-w-5xl mx-auto px-4 py-10">
+
+
         <motion.section {...sectionAnim}>
           <div className="max-w-3xl">
             <h2 className="text-3xl font-bold text-gray-900">Tell us about your interest</h2>
