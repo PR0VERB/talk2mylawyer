@@ -4,7 +4,7 @@ import { Loader2 } from 'lucide-react';
 import { motion, type HTMLMotionProps } from 'framer-motion';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'accent' | 'outline' | 'ghost';
+  variant?: 'primary' | 'accent' | 'outline' | 'ghost' | 'brand';
   loading?: boolean;
 }
 
@@ -16,6 +16,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       accent: 'bg-emerald-500 text-white hover:bg-emerald-600 hover:shadow-md',
       outline: 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:shadow-md',
       ghost: 'bg-transparent text-gray-700 hover:bg-gray-100',
+      brand: 'bg-[#5A00FF] text-white hover:bg-[#4E00D9] hover:shadow-md focus:ring-[#5A00FF]'
     } as const;
 
     // Cast props to HTMLMotionProps to satisfy framer-motion typing

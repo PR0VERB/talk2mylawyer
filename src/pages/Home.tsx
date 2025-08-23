@@ -25,7 +25,11 @@ export default function Home() {
                 First Lawyer is a legal consultation platform that connects clients with vetted, verified lawyers across multiple practice areas. Describe your case and get matched to the best-fit attorneys based on your needs and location, then compare profiles and reviews, schedule consultations, and securely share documents.
               </p>
               <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:gap-6 gap-4">
-                <Button onClick={() => navigate('/early-access')} className="px-5 py-3 text-base bg-[#5A00FF] hover:bg-[#4E00D9] text-white focus:ring-[#5A00FF]">
+                <Button
+                  variant="brand"
+                  onClick={() => navigate('/early-access')}
+                  className="px-5 py-3 text-base"
+                >
                   GAIN EARLY ACCESS!
                 </Button>
                 <div className="flex items-center gap-2 text-sm text-gray-600">
