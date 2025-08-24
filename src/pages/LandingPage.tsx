@@ -208,8 +208,8 @@ export default function LandingPage() {
                       <Input label="First name" placeholder="Jane" {...register('first_name')} error={errors.first_name?.message} />
                       <Input label="Last name" placeholder="Doe" {...register('last_name')} error={errors.last_name?.message} />
                       <Input label="Work email" type="email" placeholder="jane@company.com" {...register('email')} error={errors.email?.message} />
-                      <Input label="Country/Region" placeholder="United States" {...register('country')} error={errors.country?.message} />
-                      <Input label="City" placeholder="San Francisco" {...register('city')} error={errors.city?.message} />
+                      <Input label="Country/Region" placeholder="South Africa" {...register('country')} error={errors.country?.message} />
+                      <Input label="City" placeholder="Johannesburg" {...register('city')} error={errors.city?.message} />
                     </>
                   )}
                 </div>

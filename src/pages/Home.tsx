@@ -22,7 +22,7 @@ export default function Home() {
             <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_left,rgba(56,189,248,0.15),transparent_40%),radial-gradient(ellipse_at_bottom_right,rgba(16,185,129,0.12),transparent_35%)]" />
             <div className="max-w-3xl">
               <p className="text-lg md:text-xl leading-8 text-gray-800">
-                First Lawyer is a legal consultation platform that connects clients with vetted, verified lawyers across multiple practice areas. Describe your case and get matched to the best-fit attorneys based on your needs and location, then compare profiles and reviews, schedule consultations, and securely share documents.
+                Talk2MyLawyer is a legal consultation platform that connects clients with vetted, verified lawyers across multiple practice areas. Describe your case and get matched to the best-fit attorneys based on your needs and location, then compare profiles and reviews, schedule consultations, and securely share documents.
               </p>
               <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:gap-6 gap-4">
                 <Button
