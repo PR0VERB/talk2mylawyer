@@ -60,7 +60,8 @@ export default function LandingPage() {
     formState: { errors, isValid },
   } = useForm<FormValues>({
     resolver: yupResolver(schema) as any,
-    mode: 'onBlur',
+    mode: 'onChange',
+    reValidateMode: 'onChange',
     defaultValues: {
       roles: [],
       primary_reason: undefined as any,
@@ -238,7 +239,7 @@ export default function LandingPage() {
                 ) : (
                   <div className="flex items-center gap-3">
                     <Button type="submit" variant="brand" loading={loading} disabled={!isValid}>
-                      Submit
+                      GET EARLY ACCESS!
                     </Button>
                     {!hasSupabase && (
                       <span className="text-sm text-gray-500">Setup required: add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in .env</span>
