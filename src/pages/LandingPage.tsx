@@ -88,7 +88,7 @@ export default function LandingPage() {
         country: values.country,
         city: values.city,
         consent: values.consent,
-
+        home_question: homeQuestion || null,
         meta: { userAgent: navigator.userAgent, ...(homeQuestion ? { home_question: homeQuestion } : {}) },
       });
       if (error) throw error;

@@ -5,7 +5,7 @@ import { ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
-  const [homeQuestion, setHomeQuestion] = useState<string>('I would like to know...');
+  const [homeQuestion, setHomeQuestion] = useState<string>('');
   const navigate = useNavigate();
   const sectionAnim = useMemo(() => ({ initial: { opacity: 0, y: 8 }, animate: { opacity: 1, y: 0 } }), []);
 
@@ -36,6 +36,7 @@ export default function Home() {
                   value={homeQuestion}
                   onChange={(e) => setHomeQuestion(e.target.value)}
                   rows={2}
+                  placeholder="I would like to know..."
                   className="mx-auto block w-full max-w-2xl px-5 py-2.5 border rounded-full text-gray-900 bg-white text-center placeholder:text-center focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all duration-200 shadow-sm focus:shadow-md border-gray-300 resize-none"
                 />
               </div>
