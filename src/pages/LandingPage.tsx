@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -47,6 +48,8 @@ const schema = yup.object({
 export type FormValues = yup.InferType<typeof schema>;
 
 export default function LandingPage() {
+  const location = useLocation() as any;
+  const homeQuestion: string | undefined = location?.state?.homeQuestion;
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const hasSupabase = Boolean(supabase);
@@ -86,7 +89,7 @@ export default function LandingPage() {
         city: values.city,
         consent: values.consent,
 
-        meta: { userAgent: navigator.userAgent },
+        meta: { userAgent: navigator.userAgent, ...(homeQuestion ? { home_question: homeQuestion } : {}) },
       });
       if (error) throw error;
       toast.success('Thanks! We will be in touch.', { icon: '✅' });

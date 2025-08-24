@@ -1,10 +1,11 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '../components/ui/Button';
 import { ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
+  const [homeQuestion, setHomeQuestion] = useState<string>('I would like to know...');
   const navigate = useNavigate();
   const sectionAnim = useMemo(() => ({ initial: { opacity: 0, y: 8 }, animate: { opacity: 1, y: 0 } }), []);
 
@@ -24,10 +25,25 @@ export default function Home() {
               <p className="text-lg md:text-xl leading-8 text-gray-800">
                 Talk2MyLawyer is a legal consultation platform that connects clients with vetted, verified lawyers across multiple practice areas. Describe your case and get matched to the best-fit attorneys based on your needs and location, then compare profiles and reviews, schedule consultations, and securely share documents.
               </p>
-              <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:gap-6 gap-4">
+
+              {/* Question Box */}
+              <div className="mt-5 text-center">
+                <label htmlFor="home-question" className="block text-sm font-medium text-gray-900 mb-2 text-center">
+                  You now know a little more about Talk2MyLawyer, what else do you want to know?
+                </label>
+                <textarea
+                  id="home-question"
+                  value={homeQuestion}
+                  onChange={(e) => setHomeQuestion(e.target.value)}
+                  rows={2}
+                  className="mx-auto block w-full max-w-2xl px-5 py-2.5 border rounded-full text-gray-900 bg-white text-center placeholder:text-center focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all duration-200 shadow-sm focus:shadow-md border-gray-300 resize-none"
+                />
+              </div>
+
+              <div className="mt-6 flex flex-col items-center gap-4">
                 <Button
                   variant="brand"
-                  onClick={() => navigate('/early-access')}
+                  onClick={() => navigate('/early-access', { state: { homeQuestion } })}
                   className="px-5 py-3 text-base"
                 >
                   GET EARLY ACCESS!
