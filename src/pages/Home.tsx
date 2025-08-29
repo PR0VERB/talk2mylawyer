@@ -3,11 +3,48 @@ import { motion } from 'framer-motion';
 import { Button } from '../components/ui/Button';
 import { ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
+import { supabase } from '../lib/supabaseClient';
+
 
 export default function Home() {
   const [homeQuestion, setHomeQuestion] = useState<string>('');
+  const [ctaLoading, setCtaLoading] = useState<'submit' | 'early-access' | null>(null);
   const navigate = useNavigate();
+  const hasSupabase = Boolean(supabase);
   const sectionAnim = useMemo(() => ({ initial: { opacity: 0, y: 8 }, animate: { opacity: 1, y: 0 } }), []);
+
+
+  const handleCTA = async (cta: 'submit' | 'early-access') => {
+    setCtaLoading(cta);
+    try {
+      if (!supabase) {
+        toast.error('Supabase is not configured. Please add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.');
+      } else {
+        const emailPlaceholder = `unknown+${Date.now()}@example.com`;
+        const { error } = await supabase.from('interest_submissions').insert({
+          roles: ['Other'],
+          primary_reason: 'Other',
+          first_name: 'Unknown',
+          last_name: 'Unknown',
+          email: emailPlaceholder,
+          country: 'Unknown',
+          city: 'Unknown',
+          consent: false,
+          home_question: homeQuestion || null,
+          meta: { userAgent: navigator.userAgent, ...(homeQuestion ? { home_question: homeQuestion } : {}), cta, source: 'home-cta' },
+        });
+        if (error) throw error;
+        toast.success('Thanks! Fill the form below for early access.', { duration: 3000 });
+      }
+    } catch (e: any) {
+      console.error(e);
+      toast.error(e?.message || 'Could not record your interest.');
+    } finally {
+      setTimeout(() => navigate('/early-access', { state: { homeQuestion } }), 200);
+      setCtaLoading(null);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
@@ -42,21 +79,41 @@ export default function Home() {
               </div>
 
               <div className="mt-6 flex flex-col items-center gap-4">
-                <Button
-                  variant="brand"
-                  onClick={() => navigate('/early-access', { state: { homeQuestion } })}
-                  className="px-5 py-3 text-base"
-                >
-                  GET EARLY ACCESS!
-                </Button>
+                <div className="flex items-center gap-3">
+                  <Button
+                    variant="primary"
+                    onClick={() => handleCTA('submit')}
+                    loading={ctaLoading === 'submit'}
+                    disabled={ctaLoading !== null}
+                    className="px-5 py-3 text-base"
+                  >
+                    SUBMIT
+                  </Button>
+                  <Button
+                    variant="brand"
+                    onClick={() => handleCTA('early-access')}
+                    loading={ctaLoading === 'early-access'}
+                    disabled={ctaLoading !== null}
+                    className="px-5 py-3 text-base"
+                  >
+                    GET EARLY ACCESS!
+                  </Button>
+                </div>
                 <div className="flex items-center gap-2 text-sm text-gray-600">
                   <ShieldCheck className="h-5 w-5 text-emerald-600" />
                   <span>Vetted & verified attorneys • Private & secure consultations</span>
                 </div>
               </div>
+              {!hasSupabase && (
+                <div className="mt-2 text-sm text-gray-500">Setup required: add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in .env</div>
+              )}
             </div>
           </div>
         </motion.section>
+        <Toaster position="top-right" toastOptions={{
+          success: { style: { background: '#10B981', color: 'white' } },
+          error: { style: { background: '#EF4444', color: 'white' } },
+        }} />
       </main>
     </div>
   );
