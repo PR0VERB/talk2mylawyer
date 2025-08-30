@@ -147,9 +147,9 @@ export default function LandingPage() {
         <motion.section {...sectionAnim} className="mt-6">
           <Card className="p-6 ring-1 ring-sky-100/60">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              {/* Role and Intent */}
+              {/* What applies to you? */}
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">Role and Intent</h3>
+                <h3 className="text-lg font-semibold text-gray-900">What applies to you?</h3>
                 <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Role (select all that apply)</label>
